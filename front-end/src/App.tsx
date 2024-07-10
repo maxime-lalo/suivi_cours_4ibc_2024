@@ -5,8 +5,10 @@ import Title, { EColor } from "./components/elements/Title";
 import Counter from "./components/elements/Counter";
 import Timer from "./components/elements/Timer";
 import TimerClass from "./components/elements/TimerClass";
+import useOpenable from "./hooks/useOpenable";
 
 function App() {
+  const { isOpen, toggle } = useOpenable(true);
   return (
     <div className="App">
       <header className="App-header">
@@ -23,8 +25,13 @@ function App() {
           Learn React
         </a>
         <Counter />
-        <Timer seconds={10} />
-        <TimerClass seconds={10} />
+        <button onClick={() => toggle()}>Toggle</button>
+        {isOpen && (
+          <>
+            <Timer seconds={10} />
+            <TimerClass seconds={10} />
+          </>
+        )}
         <Title title="Mon super titre" />
         <Title title="Mon super titre 2" color={EColor.GREEN} />
         <Title title="Mon super titre 3" color={EColor.RED} />
