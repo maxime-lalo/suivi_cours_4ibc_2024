@@ -1,0 +1,13 @@
+{
+  "app": "cours_4ibc",
+  "modules": {
+    "pages": {
+      "Home": {
+        "enabled": true,
+        "props": {
+          "path": "/"
+        }
+      }
+    }
+  }
+}
