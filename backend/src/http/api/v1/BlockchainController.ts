@@ -2,7 +2,7 @@ import express, { Router } from "express";
 import ApiResponses from "../ApiResponses";
 import BlockchainService from "../../../services/BlockchainService";
 import RequireBodyValidation from "../../middlewares/RequireBodyValidation";
-import SetValueRequestResource from "../../../../commons/BasicContract/SetValueRequestResource";
+import SetValueRequestResource from "common/BasicContract/SetValueRequestResource";
 
 export default (superRouter: Router) => {
 	const router = express.Router();
