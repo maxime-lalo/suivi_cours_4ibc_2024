@@ -1,7 +1,6 @@
 // npm i sass
 
 import classes from "./classes.module.scss";
-
 export enum EColor {
   RED = "red",
   GREEN = "green",
