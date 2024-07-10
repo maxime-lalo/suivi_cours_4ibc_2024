@@ -7,6 +7,12 @@
         "props": {
           "path": "/"
         }
+      },
+      "Test": {
+        "enabled": true,
+        "props": {
+          "path": "/test/:seconds"
+        }
       }
     }
   }

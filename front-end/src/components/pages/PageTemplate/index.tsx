@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import classes from "./classes.module.scss";
+import NavMenu from "../../materials/NavMenu";
 
 type IProps = {
   children?: React.ReactNode;
@@ -14,7 +15,9 @@ export default function PageTemplate(props: IProps) {
 
   return (
     <div className={classes["root"]}>
-      <header className={"menu"}>{/*notre menu */}</header>
+      <header className={"menu"}>
+        <NavMenu />
+      </header>
       <main className={classes["body"]}>
         <div className={classes["content"]}>{props.children}</div>
       </main>
