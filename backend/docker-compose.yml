@@ -1,0 +1,17 @@
+version: "3.8"
+name: cours_4a
+volumes:
+  db_storage:
+
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=0000
+      - POSTGRES_DB=cours_4a
+    ports:
+      - ${DB_PORT}:5432
+    volumes:
+      - db_storage:/var/lib/postgresql/data
