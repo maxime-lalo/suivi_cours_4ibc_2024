@@ -4,6 +4,7 @@ import "./App.css";
 import Title, { EColor } from "./components/elements/Title";
 import Counter from "./components/elements/Counter";
 import Timer from "./components/elements/Timer";
+import TimerClass from "./components/elements/TimerClass";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         </a>
         <Counter />
         <Timer seconds={10} />
+        <TimerClass seconds={10} />
         <Title title="Mon super titre" />
         <Title title="Mon super titre 2" color={EColor.GREEN} />
         <Title title="Mon super titre 3" color={EColor.RED} />
