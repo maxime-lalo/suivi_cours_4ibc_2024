@@ -1,0 +1,15 @@
+{
+    "Media queries": {
+        "prefix": "media",
+        "body": [
+            "@media(max-width: \\$screen-$1){$2}"
+        ],
+        "description": "media queries"
+    },
+    "Default div": {
+        "prefix": "<div",
+        "body": [
+            "<div className={classes[\"$1\"]}>$2</div>"
+        ]
+    }
+}
