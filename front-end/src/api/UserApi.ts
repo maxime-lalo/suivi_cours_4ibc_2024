@@ -1,6 +1,6 @@
 import BaseApi from "./BaseApi";
 import UserReponseResource from "common/User/UserReponseResource";
-
+import UserCreateRequestResource from "common/User/UserCreateRequestResource";
 export default class UserApi extends BaseApi {
   private static instance: UserApi;
 
@@ -16,5 +16,11 @@ export default class UserApi extends BaseApi {
 
   public async getAll() {
     return this.getRequest<UserReponseResource[]>(this.apiUrl);
+  }
+
+  public async createUser(body: UserCreateRequestResource) {
+    return this.postRequest<UserReponseResource>(this.apiUrl, {
+      ...body,
+    });
   }
 }

@@ -3,6 +3,8 @@ import Table, { ECellType } from "../../elements/Table";
 import PageTemplate from "../PageTemplate";
 import UserReponseResource from "common/User/UserReponseResource";
 import UserApi from "../../../api/UserApi";
+import classes from "./classes.module.scss";
+import UserCreateRequestResource from "common/User/UserCreateRequestResource";
 
 export default function UsersPage() {
   const [users, setUsers] = useState<UserReponseResource[]>([]);
@@ -18,6 +20,30 @@ export default function UsersPage() {
         });
     }, 2000);
   }, []);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget as HTMLFormElement;
+
+    const userResource =
+      UserCreateRequestResource.hydrate<UserCreateRequestResource>({
+        email: form["email"].value,
+        password: "monpass",
+        name: form["firstName"].value,
+      });
+
+    try {
+      await userResource.validateOrReject();
+      UserApi.getInstance()
+        .createUser(userResource)
+        .then((user) => {
+          setUsers((prevUsers) => [...prevUsers, user]);
+        });
+    } catch (e) {
+      alert("Error while creating user");
+      console.error(e);
+    }
+  };
 
   return (
     <PageTemplate tabTitle="Users">
@@ -38,6 +64,14 @@ export default function UsersPage() {
         }))}
         isLoading={isLoading}
       />
+
+      <div className={classes["create-user"]}>
+        <form onSubmit={handleSubmit}>
+          <input type="text" placeholder="Name" name="firstName" />
+          <input type="text" placeholder="Email" name="email" />
+          <button type="submit">Create User</button>
+        </form>
+      </div>
     </PageTemplate>
   );
 }

@@ -10,4 +10,8 @@ export default class UserCreateRequestResource extends Resource {
   @MinLength(6)
   @Expose()
   public password!: string;
+
+  @MinLength(6)
+  @Expose()
+  public name!: string;
 }
