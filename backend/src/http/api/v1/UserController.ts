@@ -16,7 +16,7 @@ interface RequestWithParamId extends Request {
 export default (superRouter: Router) => {
 	const router = express.Router();
 
-	superRouter.use("/user", router);
+	superRouter.use("/users", router);
 
 	// Tester sur :
 	// http://localhost:3001/api/v1/user

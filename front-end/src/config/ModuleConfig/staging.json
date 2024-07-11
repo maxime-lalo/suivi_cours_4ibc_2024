@@ -1,5 +1,8 @@
 {
   "app": "cours_4ibc",
+  "api": {
+    "rootUrl": "http://localhost:3001"
+  },
   "modules": {
     "pages": {
       "Home": {
@@ -11,7 +14,13 @@
       "Test": {
         "enabled": true,
         "props": {
-          "path": "/test"
+          "path": "/test/:seconds"
+        }
+      },
+      "Users": {
+        "enabled": true,
+        "props": {
+          "path": "/users"
         }
       }
     }
