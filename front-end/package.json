@@ -23,6 +23,7 @@
         "web-vitals": "^2.1.4"
     },
     "devDependencies": {
+        "@wagmi/cli": "^2.1.15",
         "common": "file:../commons/dist"
     },
     "scripts": {

@@ -1,5 +1,6 @@
 import Table, { ECellType } from "../../elements/Table";
 import ConnectWallet from "../../materials/ConnectWallet";
+import ContractMaterial from "../../materials/ContractMaterial";
 import PageTemplate from "../PageTemplate";
 
 export default function HomePage() {
@@ -39,6 +40,7 @@ export default function HomePage() {
         ]}
       />
       <ConnectWallet />
+      <ContractMaterial />
     </PageTemplate>
   );
 }
