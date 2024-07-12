@@ -3,6 +3,7 @@ import TestController from "./TestController";
 import UserController from "./UserController";
 import BlockchainController from "./BlockchainController";
 import AuthenticationController from "./AuthenticationController";
+import FileController from "./FileController";
 
 export default (superRouter: Router) => {
 	const router = express.Router();
@@ -13,4 +14,5 @@ export default (superRouter: Router) => {
 	UserController(router);
 	BlockchainController(router);
 	AuthenticationController(router);
+	FileController(router);
 };
