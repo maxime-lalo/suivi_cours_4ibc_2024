@@ -3,13 +3,16 @@ import Resource from "../Resource";
 import PostsResponseResource from "../Posts/PostsResponseResource";
 
 export default class UserResponseResource extends Resource {
-  @Expose()
-  public email!: string;
+    @Expose()
+    public id!: number;
 
-  @Expose()
-  public name!: string;
+    @Expose()
+    public email!: string;
 
-  @Expose()
-  @Type(() => PostsResponseResource)
-  public Post: PostsResponseResource[] = [];
+    @Expose()
+    public name!: string;
+
+    @Expose()
+    @Type(() => PostsResponseResource)
+    public Post?: PostsResponseResource[] = [];
 }

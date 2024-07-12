@@ -6,6 +6,8 @@ import RequireBodyValidation from "../../middlewares/RequireBodyValidation";
 import UserService from "../../../services/UserService";
 import UserResponseResource from "common/User/UserReponseResource";
 import { Request } from "express";
+import RequireEmailNotExists from "../../middlewares/RequireEmailNotExists";
+import RequireJwtAuthentication from "../../middlewares/RequireJwtAuthentication";
 
 interface RequestWithParamId extends Request {
 	params: {
@@ -16,13 +18,7 @@ interface RequestWithParamId extends Request {
 export default (superRouter: Router) => {
 	const router = express.Router();
 
-	superRouter.use("/users", router);
-
-	// Tester sur :
-	// http://localhost:3001/api/v1/user
-	router.post("/", RequireBodyValidation(UserCreateRequestResource), (req, res) => {
-		return ApiResponses.httpCreated(res, req.body);
-	});
+	superRouter.use("/users", RequireJwtAuthentication(), router);
 
 	router.get("/", async (req, res) => {
 		const users = await UserService.getInstance().getAll();

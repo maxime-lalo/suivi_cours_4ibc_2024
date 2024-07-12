@@ -1,4 +1,6 @@
+import UserCreateRequestResource from "common/User/UserCreateRequestResource";
 import DbClient from "../database/DbClient";
+import bcrypt from "bcrypt";
 
 export default class UserService {
 	private static userService: UserService;
@@ -28,6 +30,12 @@ export default class UserService {
 			include: {
 				Post: true,
 			},
+		});
+	}
+
+	public emailExists(email: string) {
+		return this.dbClient.user.findFirst({
+			where: { email },
 		});
 	}
 
