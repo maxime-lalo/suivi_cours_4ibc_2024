@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import CookieService from "../services/CookieService";
 import JwtResponseResource from "common/Authentication/JwtResponseResource";
 import UserApi from "../api/UserApi";
-import jwt from "jsonwebtoken";
+import { jwtDecode } from "jwt-decode";
 
 type IProps = {
     children: React.ReactNode;
@@ -22,10 +22,12 @@ export function UserProvider(props: IProps) {
     const [user, setUser] = useState<UserResponseResource | null>(null);
 
     const updateUserFromToken = async (token: { accessToken: string }) => {
-        const userInJwt = jwt.decode(token.accessToken) as JwtResponseResource;
-
+        const userInJwt = jwtDecode(token.accessToken) as JwtResponseResource;
+        console.log(userInJwt);
         const user = await UserApi.getInstance().getById(userInJwt.id);
-        setUser(user);
+        if (user) {
+            setUser(user);
+        }
     };
 
     useEffect(() => {

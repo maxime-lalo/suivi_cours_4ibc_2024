@@ -12,7 +12,15 @@ dotenv.config();
 
 const app = express();
 // npm i body-parser
-app.use(bodyParser.urlencoded({ extended: true }), bodyParser.json(), cookiesParser(), cors());
+app.use(
+	bodyParser.urlencoded({ extended: true }),
+	bodyParser.json(),
+	cookiesParser(),
+	cors({
+		origin: "http://localhost:3000",
+		credentials: true,
+	}),
+);
 const subRouter: Router = express.Router();
 app.use("/", subRouter);
 api(subRouter);

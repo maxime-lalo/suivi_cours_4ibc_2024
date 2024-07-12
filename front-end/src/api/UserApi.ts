@@ -25,6 +25,8 @@ export default class UserApi extends BaseApi {
     }
 
     public async getById(id: number) {
-        return this.getRequest<UserReponseResource>(`${this.apiUrl}/${id}`);
+        return this.getRequest<UserReponseResource>(
+            `${this.apiUrl}/${id}`
+        ).catch((e) => console.error(e));
     }
 }

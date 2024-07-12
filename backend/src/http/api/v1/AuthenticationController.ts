@@ -12,7 +12,9 @@ import BlockchainService from "../../../services/BlockchainService";
 import JwtResponseResource from "common/Authentication/JwtResponseResource";
 import assert from "assert";
 export const cookieJwtOptions: Readonly<CookieOptions> = {
+	httpOnly: false,
 	path: "/",
+	secure: true,
 	sameSite: "none",
 	expires: new Date(Date.now() + 1000 * 60 * 60 * 48), // 48h
 };
