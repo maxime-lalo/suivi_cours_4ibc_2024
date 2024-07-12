@@ -17,7 +17,6 @@ export default class CookieService {
     public getJwtToken(): string | null {
         const cookie = this.getCookie("accessToken");
         if (!cookie) return null;
-        console.log(cookie);
         return cookie;
     }
 }

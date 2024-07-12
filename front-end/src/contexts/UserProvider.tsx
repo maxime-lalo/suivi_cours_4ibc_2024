@@ -22,20 +22,19 @@ export function UserProvider(props: IProps) {
     const [user, setUser] = useState<UserResponseResource | null>(null);
 
     const updateUserFromToken = async (token: { accessToken: string }) => {
+        setIsLoading(true);
         const userInJwt = jwtDecode(token.accessToken) as JwtResponseResource;
-        console.log(userInJwt);
         const user = await UserApi.getInstance().getById(userInJwt.id);
         if (user) {
             setUser(user);
+            setIsLoading(false);
         }
     };
 
     useEffect(() => {
         const token = CookieService.getInstance().getJwtToken();
-        setTimeout(() => {
-            // Fetch user
-            setIsLoading(false);
-        }, 2000);
+        if (token) updateUserFromToken({ accessToken: token });
+        if (!token) setIsLoading(false);
     }, []);
 
     return (

@@ -2,6 +2,7 @@ import UserLoginRequestResource from "common/User/UserLoginRequestResource";
 import { useContext, useEffect, useState } from "react";
 import AuthenticationApi from "../../../../api/AuthenticationApi";
 import { UserContext } from "../../../../contexts/UserProvider";
+import IsConnected from "../../IsConnected";
 
 export default function ConnectAccount() {
     const [email, setEmail] = useState("");
@@ -39,31 +40,29 @@ export default function ConnectAccount() {
         }
     };
 
-    useEffect(() => {
-        console.log(userContext);
-    }, [userContext]);
-
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                <p>Enter your email:</p>
-                <input
-                    type="text"
-                    name="email"
-                    onChange={handleEmailChange}
-                    value={email}
-                />
-            </label>
-            <label>
-                <p>Enter your password:</p>
-                <input
-                    type="password"
-                    name="password"
-                    onChange={handlePasswordChange}
-                    value={password}
-                />
-            </label>
-            <button type="submit">Submit</button>
-        </form>
+        <IsConnected not>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    <p>Enter your email:</p>
+                    <input
+                        type="text"
+                        name="email"
+                        onChange={handleEmailChange}
+                        value={email}
+                    />
+                </label>
+                <label>
+                    <p>Enter your password:</p>
+                    <input
+                        type="password"
+                        name="password"
+                        onChange={handlePasswordChange}
+                        value={password}
+                    />
+                </label>
+                <button type="submit">Submit</button>
+            </form>
+        </IsConnected>
     );
 }
