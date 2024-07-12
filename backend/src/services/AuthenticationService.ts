@@ -3,7 +3,8 @@ import DbClient from "../database/DbClient";
 import bcrypt from "bcrypt";
 import UserLoginRequestResource from "common/User/UserLoginRequestResource";
 import jwt from "jsonwebtoken";
-import UserResponseResource from "common/User/UserReponseResource";
+import JwtResponseResource from "common/Authentication/JwtResponseResource";
+import crypto from "crypto";
 
 export default class AuthenticationService {
 	private static authenticationService: AuthenticationService;
@@ -18,14 +19,18 @@ export default class AuthenticationService {
 
 	// npm i bcrypt
 	// npm i --save-dev @types/bcrypt
-	public register(user: UserCreateRequestResource) {
-		return this.dbClient.user.create({
+	public async register(user: UserCreateRequestResource) {
+		const userCreated = await this.dbClient.user.create({
 			data: {
+				messageToSign: crypto.randomBytes(10).toString("base64url"),
 				email: user.email,
 				name: user.name,
 				password: bcrypt.hashSync(user.password, 10),
 			},
 		});
+
+		const userHydrated = JwtResponseResource.hydrate<JwtResponseResource>(userCreated);
+		return this.generateJwt(userHydrated);
 	}
 
 	// npm i jsonwebtoken
@@ -40,10 +45,14 @@ export default class AuthenticationService {
 
 		if (!bcrypt.compareSync(userResource.password, user.password)) return null;
 
-		const userHydrated = UserResponseResource.hydrate<UserResponseResource>(user);
+		const userHydrated = JwtResponseResource.hydrate<JwtResponseResource>(user);
+		return this.generateJwt(userHydrated);
+	}
+
+	public generateJwt(user: JwtResponseResource) {
 		return jwt.sign(
 			{
-				...userHydrated,
+				...user,
 			},
 			process.env.JWT_SECRET!,
 			{

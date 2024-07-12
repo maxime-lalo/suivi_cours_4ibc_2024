@@ -1,4 +1,4 @@
-import { formatUnits } from "viem";
+import { Address, formatUnits } from "viem";
 import BlockchainClient from "../blockchain/BlockchainClient";
 import BasicContract from "../blockchain/contracts/BasicContract";
 
@@ -41,5 +41,13 @@ export default class BlockchainService {
 
 	public setPayableValue(value: number) {
 		return this.basicContract.setPayableValue(value);
+	}
+
+	public verifySignature(messageToSign: string, signature: string, address: string) {
+		return this.blockchainClient.publicClient.verifyMessage({
+			address: address as Address,
+			message: messageToSign,
+			signature: signature as Address,
+		});
 	}
 }
