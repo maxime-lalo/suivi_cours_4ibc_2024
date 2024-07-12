@@ -13,6 +13,12 @@ export default class UserResponseResource extends Resource {
     public name!: string;
 
     @Expose()
+    public walletAddress!: string | null;
+
+    @Expose()
+    public messageToSign!: string | null;
+
+    @Expose()
     @Type(() => PostsResponseResource)
     public Post?: PostsResponseResource[] = [];
 }

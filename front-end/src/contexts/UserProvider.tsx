@@ -13,6 +13,7 @@ export type IUserContext = {
     isLoading: boolean;
     user: UserResponseResource | null;
     udpateUserFromToken: (token: { accessToken: string }) => void;
+    disconnect: () => void;
 };
 
 export const UserContext = createContext<IUserContext>(undefined!);
@@ -31,6 +32,11 @@ export function UserProvider(props: IProps) {
         }
     };
 
+    const disconnect = () => {
+        CookieService.getInstance().removeJwtToken();
+        setUser(null);
+    };
+
     useEffect(() => {
         const token = CookieService.getInstance().getJwtToken();
         if (token) updateUserFromToken({ accessToken: token });
@@ -43,6 +49,7 @@ export function UserProvider(props: IProps) {
                 isLoading,
                 user,
                 udpateUserFromToken: updateUserFromToken,
+                disconnect,
             }}
         >
             {props.children}

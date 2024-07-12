@@ -19,4 +19,9 @@ export default class CookieService {
         if (!cookie) return null;
         return cookie;
     }
+
+    public removeJwtToken() {
+        document.cookie =
+            "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
 }

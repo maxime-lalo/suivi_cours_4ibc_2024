@@ -44,18 +44,13 @@ export default (superRouter: Router) => {
 	});
 
 	router.post("/verify-wallet", RequireBodyValidation(VerifyWalletRequestResource), RequireJwtAuthentication(), async (req, res) => {
-		const user = (req.body as any).user as JwtResponseResource;
-		assert(user.messageToSign, "messageToSign is required");
-
-		const isSignatureValid = await BlockchainService.getInstance().verifySignature(user.messageToSign, req.body.signature, req.body.walletAddress);
+		const userInRequest = (req.body as any).user as JwtResponseResource;
+		assert(userInRequest.messageToSign, "messageToSign is required");
+		const isSignatureValid = await BlockchainService.getInstance().verifySignature(userInRequest.messageToSign, req.body.signature, req.body.walletAddress);
 		if (!isSignatureValid) return ApiResponses.httpBadRequest(res, "Invalid signature");
 
-		const token = AuthenticationService.getInstance().generateJwt(
-			JwtResponseResource.hydrate<JwtResponseResource>({
-				...user,
-				walletAddress: req.body.walletAddress,
-			}),
-		);
+		const user = await AuthenticationService.getInstance().verifyWallet(userInRequest.email, req.body.walletAddress);
+		const token = AuthenticationService.getInstance().generateJwt(JwtResponseResource.hydrate<JwtResponseResource>(user));
 		res.cookie("accessToken", token, cookieJwtOptions);
 		return ApiResponses.httpSuccess(res, {
 			accessToken: token,

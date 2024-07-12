@@ -44,10 +44,14 @@ export default class BlockchainService {
 	}
 
 	public verifySignature(messageToSign: string, signature: string, address: string) {
-		return this.blockchainClient.publicClient.verifyMessage({
-			address: address as Address,
-			message: messageToSign,
-			signature: signature as Address,
-		});
+		return this.blockchainClient.publicClient
+			.verifyMessage({
+				address: address as Address,
+				message: messageToSign,
+				signature: signature as Address,
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	}
 }

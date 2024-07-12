@@ -2,36 +2,36 @@ import { useEffect, useState } from "react";
 import { Connector, useConnect } from "wagmi";
 
 export function WalletOptions() {
-  const { connectors, connect } = useConnect();
+    const { connectors, connect } = useConnect();
 
-  return connectors.map((connector) => (
-    <WalletOption
-      key={connector.uid}
-      connector={connector}
-      onClick={() => connect({ connector })}
-    />
-  ));
+    return connectors.map((connector) => (
+        <WalletOption
+            key={connector.uid}
+            connector={connector}
+            onClick={() => connect({ connector })}
+        />
+    ));
 }
 
 function WalletOption({
-  connector,
-  onClick,
+    connector,
+    onClick,
 }: {
-  connector: Connector;
-  onClick: () => void;
+    connector: Connector;
+    onClick: () => void;
 }) {
-  const [ready, setReady] = useState(false);
+    const [ready, setReady] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      const provider = await connector.getProvider();
-      setReady(!!provider);
-    })();
-  }, [connector]);
+    useEffect(() => {
+        (async () => {
+            const provider = await connector.getProvider();
+            setReady(!!provider);
+        })();
+    }, [connector]);
 
-  return (
-    <button onClick={onClick} disabled={!ready}>
-      {connector.name}
-    </button>
-  );
+    return (
+        <button onClick={onClick} disabled={!ready}>
+            {connector.name}
+        </button>
+    );
 }

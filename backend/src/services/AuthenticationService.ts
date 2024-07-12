@@ -22,7 +22,7 @@ export default class AuthenticationService {
 	public async register(user: UserCreateRequestResource) {
 		const userCreated = await this.dbClient.user.create({
 			data: {
-				messageToSign: crypto.randomBytes(10).toString("base64url"),
+				messageToSign: `Welcome to our platform ${user.name}, please sign this to connect :  ${crypto.randomBytes(20).toString("hex")}`,
 				email: user.email,
 				name: user.name,
 				password: bcrypt.hashSync(user.password, 10),
@@ -59,5 +59,17 @@ export default class AuthenticationService {
 				expiresIn: "1h",
 			},
 		);
+	}
+
+	public async verifyWallet(email: string, walletAddress: string) {
+		return this.dbClient.user.update({
+			where: {
+				email,
+			},
+			data: {
+				walletAddress,
+				messageToSign: "",
+			},
+		});
 	}
 }
